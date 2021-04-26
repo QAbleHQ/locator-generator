@@ -53,7 +53,8 @@ public class EntryPoint {
     public void generate()
     {
         System.out.println("generate triggered");
-
+        PageObject object = new PageObject();
+        object.generateLocatorForCurrentPage();
         waitForCommand();
 
     }
