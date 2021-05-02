@@ -1,4 +1,5 @@
 import domParser.ElementChecker;
+import domParser.xPathGenerator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
@@ -30,6 +31,7 @@ public class PageObject {
         Elements links = doc.select("a");
         Element head = doc.select("head").first();
 
+        xPathGenerator generator = new xPathGenerator();
 
 
         String currentPath = "";
@@ -49,13 +51,14 @@ public class PageObject {
 
                 currentPath = currentPath + "/" + element.nodeName();
 
-
                 ElementFilterHelper filterHelper = new ElementFilterHelper();
                 if (filterHelper.checkForValidElement(element)) {
+
                     object.put("name", element.nodeName());
-                    object.put("absolutePath", currentPath);
+                    object.put("absolutePath", generator.generateAbsolutePath(element));
                     object.put("xpath", checker.getElementList(element, currentPath));
                     elementArray.add(object);
+                    System.out.println("baseURl    " + element.cssSelector());
 
                 }
             }

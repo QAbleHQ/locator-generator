@@ -9,6 +9,7 @@ public class xPathGenerator {
         String xpath = "//*[@id=" + element.attr("id") + "]";
         return xpath;
     }
+
     public String generateXpathBasedOnId(Element element) {
         String xpath = "//" + element.nodeName() + "[@id=" + element.attr("id") + "]";
         return xpath;
@@ -22,5 +23,28 @@ public class xPathGenerator {
     public String generateXpathBasedOnClassWithoutNode(Element element) {
         String xpath = "//*[@class=" + element.attr("class") + "]";
         return xpath;
+    }
+
+
+    public String generateAbsolutePath(Element element) {
+
+        String path = "/" + element.nodeName();
+
+        String finalParent = "html";
+        Boolean hasParent = true;
+        while (hasParent) {
+            if (element.hasParent()) {
+                element = element.parent();
+
+                if(!element.nodeName().equals(finalParent)) {
+                    path = element.nodeName() + "/" + path;
+                }
+            } else {
+                hasParent = false;
+            }
+        }
+
+        return path;
+
     }
 }
