@@ -10,6 +10,7 @@ public class ElementChecker {
 
     public ArrayList getElementList(Element element, String currentPath) {
         xPathGenerator generator = new xPathGenerator();
+
         ArrayList list = new ArrayList();
         if (checkForID(element)) {
             list.add(generator.generateXpathBasedOnId(element));
@@ -45,7 +46,6 @@ public class ElementChecker {
     }
 
     public boolean checkForClass(Element element) {
-        System.out.println("Attributes   " + element.attributes());
 
         Attributes attributes = element.attributes();
 
