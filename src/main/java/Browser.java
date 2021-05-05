@@ -13,8 +13,6 @@ public class Browser {
         driver = new ChromeDriver();
         driver.get(EntryPoint.website);
 
-
-
     }
 
     public void generatePageObject()

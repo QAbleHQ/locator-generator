@@ -11,7 +11,6 @@ public class ElementFilterHelper {
         if (checkForButton(element) | checkForLink(element) | checkForLink(element) | checkForTextarea(element) | checkForInput(element)) {
             isValidElement = true;
 
-
         }
         return isValidElement;
     }

@@ -1,10 +1,6 @@
-import domParser.ElementChecker;
-import domParser.xPathGenerator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Attribute;
-import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -19,12 +15,15 @@ public class PageObject {
         System.out.println("Current URL is" + Browser.driver.getCurrentUrl());
         String pageDom = Browser.driver.getPageSource();
 
-        domParser(pageDom);
+        JSONArray elementArray = domParser(pageDom);
+
+        GeneratePageObjectFile file = new GeneratePageObjectFile();
+        file.createPageObjectFile(elementArray);
 
 
     }
 
-    public void domParser(String dom) {
+    public JSONArray domParser(String dom) {
 
 
         Document doc = Jsoup.parse(dom);
@@ -52,12 +51,18 @@ public class PageObject {
                 currentPath = currentPath + "/" + element.nodeName();
 
                 ElementFilterHelper filterHelper = new ElementFilterHelper();
+
+                ElementNameGenerator nameGenerator = new ElementNameGenerator();
                 if (filterHelper.checkForValidElement(element)) {
 
-                    object.put("name", element.nodeName());
+                    ArrayList list = checker.getElementList(element);
+                    object.put("name", nameGenerator.generateName(element));
                     object.put("absolutePath", generator.generateAbsolutePath(element));
-                    object.put("xpath", checker.getElementList(element, currentPath));
-                    elementArray.add(object);
+                    object.put("xpath", list);
+
+                    if (list.size() > 0) {
+                        elementArray.add(object);
+                    }
                     System.out.println("baseURl    " + element.cssSelector());
 
                 }
@@ -66,10 +71,9 @@ public class PageObject {
 
         }
         System.out.println("-------------------------------------------------------------------");
-          System.out.println(elementArray);
+        System.out.println(elementArray);
 
-        GeneratePageObjectFile file = new GeneratePageObjectFile();
-        file.createPageObjectFile(elementArray);
+        return elementArray;
     }
 
 

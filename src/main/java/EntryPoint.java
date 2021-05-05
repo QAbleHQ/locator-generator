@@ -23,12 +23,17 @@ public class EntryPoint {
         browser.openBrowser();
 
 
-
         entry.waitForCommand();
 
 
 
     }
+
+
+
+
+
+
 
 
     public void waitForCommand() {
