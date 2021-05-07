@@ -63,7 +63,7 @@ public class PageObject {
                     if (list.size() > 0) {
                         elementArray.add(object);
                     }
-                    System.out.println("baseURl    " + element.cssSelector());
+                  //  System.out.println("baseURl    " + element.cssSelector());
 
                 }
             }

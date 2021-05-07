@@ -51,7 +51,7 @@ public class ElementChecker {
 
 
     public boolean checkForAttributeIsAvailable(Element element, String attributeName) {
-        System.out.println("Attributes   " + element.attributes());
+       // System.out.println("Attributes   " + element.attributes());
 
         Attributes attributes = element.attributes();
 
