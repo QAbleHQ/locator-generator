@@ -25,7 +25,6 @@ public class PageObject {
 
     public JSONArray domParser(String dom) {
 
-
         Document doc = Jsoup.parse(dom);
         Elements links = doc.select("a");
         Element head = doc.select("head").first();
@@ -55,6 +54,7 @@ public class PageObject {
                 ElementNameGenerator nameGenerator = new ElementNameGenerator();
                 if (filterHelper.checkForValidElement(element)) {
 
+                    System.out.println("Element Node : " + element.nodeName());
                     ArrayList list = checker.getElementList(element);
                     object.put("name", nameGenerator.generateName(element));
                     object.put("absolutePath", generator.generateAbsolutePath(element));

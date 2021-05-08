@@ -18,6 +18,16 @@ public class xPathGenerator {
         return xpath;
     }
 
+    public String generateXpathBasedOnAriaLabel(Element element) {
+        String xpath = "//" + element.nodeName() + "[@aria-label='" + element.attr("aria-label") + "']";
+        return xpath;
+    }
+
+    public String generateXpathBasedOnPlaceholder(Element element) {
+        String xpath = "//" + element.nodeName() + "[@placeholder='" + element.attr("placeholder") + "']";
+        return xpath;
+    }
+
     public String generateXpathBasedOnClassWithoutNode(Element element) {
         String xpath = "//*[@class='" + element.attr("class") + "']";
         return xpath;
@@ -29,11 +39,18 @@ public class xPathGenerator {
         return xpath;
     }
 
+
+
     public String generateXpathBasedOnName(Element element) {
         String xpath = "//" + element.nodeName() + "[@name='" + element.attr("name") +"']";
         return xpath;
     }
 
+    public String generateXpathBasedOnText(Element element)
+    {
+        String xpath = "//" +element.nodeName()+"[contains(text(),'"+element.text()+"')]";
+        return xpath;
+    }
 
 
 

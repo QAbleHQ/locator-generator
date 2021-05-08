@@ -10,38 +10,41 @@ public class ElementChecker {
         xPathGenerator generator = new xPathGenerator();
         xPathValidator validator = new xPathValidator();
         ArrayList list = new ArrayList();
-        if (checkForAttributeIsAvailable(element, "id")) {
 
-            if (validator.isxPathIsVisible(generator.generateXpathBasedOnId(element))) {
-                list.add(generator.generateXpathBasedOnId(element));
+
+        if (element.hasText()) {
+            list.add(generator.generateXpathBasedOnText(element));
+        } else if (checkForAttributeIsAvailable(element, "name")) {
+
+            String xpathWithNode = generator.generateXpathBasedOnName(element);
+            if (validator.isxPathIsVisible(xpathWithNode)) {
+                list.add(xpathWithNode);
             }
 
-            if (validator.isxPathIsVisible(generator.generateXpathBasedOnIdWithoutNode(element))) {
-                list.add(generator.generateXpathBasedOnIdWithoutNode(element));
+        } else if (checkForAttributeIsAvailable(element, "id")) {
+
+            String xpathWithNode = generator.generateXpathBasedOnId(element);
+            if (validator.isxPathIsVisible(xpathWithNode)) {
+                list.add(xpathWithNode);
             }
 
-        }else
-        if (checkForAttributeIsAvailable(element, "class")) {
+        } else if (checkForAttributeIsAvailable(element, "aria-label")) {
+
+            if (validator.isxPathIsVisible(generator.generateXpathBasedOnAriaLabel(element))) {
+                list.add(generator.generateXpathBasedOnAriaLabel(element));
+            }
+
+        } else if (checkForAttributeIsAvailable(element, "placeholder")) {
+            if (validator.isxPathIsVisible(generator.generateXpathBasedOnPlaceholder(element))) {
+                list.add(generator.generateXpathBasedOnPlaceholder(element));
+            }
+
+        } else if (checkForAttributeIsAvailable(element, "class")) {
 
             if (validator.isxPathIsVisible(generator.generateXpathBasedOnClass(element))) {
                 list.add(generator.generateXpathBasedOnClass(element));
             }
 
-            if (validator.isxPathIsVisible(generator.generateXpathBasedOnClassWithoutNode(element))) {
-                list.add(generator.generateXpathBasedOnClassWithoutNode(element));
-            }
-
-        } else
-
-        if (checkForAttributeIsAvailable(element, "name")) {
-
-            if (validator.isxPathIsVisible(generator.generateXpathBasedOnNameWithoutNode(element))) {
-                list.add(generator.generateXpathBasedOnClass(element));
-            }
-
-            if (validator.isxPathIsVisible(generator.generateXpathBasedOnName(element))) {
-                list.add(generator.generateXpathBasedOnClassWithoutNode(element));
-            }
 
         }
 
@@ -51,7 +54,7 @@ public class ElementChecker {
 
 
     public boolean checkForAttributeIsAvailable(Element element, String attributeName) {
-       // System.out.println("Attributes   " + element.attributes());
+        // System.out.println("Attributes   " + element.attributes());
 
         Attributes attributes = element.attributes();
 

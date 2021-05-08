@@ -8,7 +8,7 @@ public class ElementFilterHelper {
     public boolean checkForValidElement(Element element) {
         boolean isValidElement = false;
 
-        if (checkForButton(element) | checkForLink(element) | checkForLink(element) | checkForTextarea(element) | checkForInput(element)) {
+        if (checkForButton(element) | checkForLink(element) | checkForTextarea(element) | checkForInput(element)) {
             isValidElement = true;
 
         }

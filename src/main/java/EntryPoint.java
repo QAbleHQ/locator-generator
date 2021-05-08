@@ -19,9 +19,7 @@ public class EntryPoint {
 
         entry.website = in.nextLine();
         System.out.println("Okey, Now we are opening the page: " + entry.website);
-
         browser.openBrowser();
-
 
         entry.waitForCommand();
 
