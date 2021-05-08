@@ -7,12 +7,20 @@ import java.util.Scanner;
 public class EntryPoint {
 
    public static String website = "";
+    public static String pageObjectDirectory = "";
+
 
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
 
         System.out.println("Hello Welcome to the locator generator");
+
+        System.out.println("First tell me the Directory Where you wanted to generate pageObject");
+
+        EntryPoint.pageObjectDirectory = in.nextLine();
+
+
         System.out.println("Tell me the Website Entry Point : ");
         EntryPoint entry = new EntryPoint();
         Browser browser = new Browser();
@@ -22,7 +30,6 @@ public class EntryPoint {
         browser.openBrowser();
 
         entry.waitForCommand();
-
 
 
     }
@@ -39,10 +46,10 @@ public class EntryPoint {
 
         Scanner commandIn = new Scanner(System.in);
         String command = commandIn.nextLine();
+
         if (command.equals("generate")) {
             generate();
         } else
-
         {
             System.out.println("Sorry, It's out of my limit, Please try : generate");
             waitForCommand();

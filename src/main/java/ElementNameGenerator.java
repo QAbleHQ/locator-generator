@@ -4,6 +4,8 @@ import java.util.Locale;
 
 public class ElementNameGenerator {
 
+    Utils utility = new Utils();
+
     public String generateName(Element element) {
 
 
@@ -35,7 +37,7 @@ public class ElementNameGenerator {
     public String getNameForInputBox(Element element) {
 
         ElementChecker checker = new ElementChecker();
-        String name = "";
+        String name = "unknown_element";
         String elementType = "text_field";
         if (element.nodeName().equals("input")) {
             if (element.attr("type").equals("text")) {
@@ -58,31 +60,33 @@ public class ElementNameGenerator {
 
 
         if (element.hasText()) {
-            name = getFormattedTextName(element.text()) + "_" + elementType;
+            name = utility.getFormattedTextName(element.text()) + "_" + elementType;
         }else if (checker.checkForAttributeIsAvailable(element, "aria-label")) {
-            name = getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
         }
         else if (checker.checkForAttributeIsAvailable(element, "placeholder")) {
-            name = getFormattedTextName(element.attr("placeholder")) + "_" + elementType;
-        } else if (checker.checkForAttributeIsAvailable(element, "value") && !getFormattedTextName(element.attr("value")).equals("")) {
-            name = getFormattedTextName(element.attr("value")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("placeholder")) + "_" + elementType;
+        } else if (checker.checkForAttributeIsAvailable(element, "value") && !utility.getFormattedTextName(element.attr("value")).equals("")) {
+            name = utility.getFormattedTextName(element.attr("value")) + "_" + elementType;
         } else if (checker.checkForAttributeIsAvailable(element, "name")) {
-            name = getFormattedTextName(element.attr("name")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("name")) + "_" + elementType;
 
         } else if (checker.checkForAttributeIsAvailable(element, "id")) {
-            name = getFormattedTextName(element.attr("id")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("id")) + "_" + elementType;
             System.out.println(name);
         }
         else if (checker.checkForAttributeIsAvailable(element, "aria-label")) {
-            name = getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
             System.out.println(name);
         }else {
             Element element1 = element.parent().siblingElements().first();
+            try {
+                if (element1.nodeName().equals("label")) {
+                    name = utility.getFormattedTextName(element1.text()) + "_" + elementType;
+                }
+            } catch (Exception e) {
 
-            if (element1.nodeName().equals("label")) {
-                name = getFormattedTextName(element1.text()) + "_" + elementType;
             }
-            name = "unknown_element";
         }
         return name;
     }
@@ -90,7 +94,7 @@ public class ElementNameGenerator {
     public String getNameForButton(Element element) {
 
         ElementChecker checker = new ElementChecker();
-        String name = "";
+        String name = "unknown_element";
         String elementType = "button";
         if (element.nodeName().equals("button")) {
             if (element.attr("type").equals("button")) {
@@ -100,33 +104,36 @@ public class ElementNameGenerator {
 
 
         if (element.hasText()) {
-            name = getFormattedTextName(element.text()) + "_" + elementType;
+            name = utility.getFormattedTextName(element.text()) + "_" + elementType;
         }else if (checker.checkForAttributeIsAvailable(element, "aria-label")) {
-            name = getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
         }
         else if (checker.checkForAttributeIsAvailable(element, "placeholder")) {
-            name = getFormattedTextName(element.attr("placeholder")) + "_" + elementType;
-        } else if (checker.checkForAttributeIsAvailable(element, "value") && !getFormattedTextName(element.attr("value")).equals("")) {
-            name = getFormattedTextName(element.attr("value")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("placeholder")) + "_" + elementType;
+        } else if (checker.checkForAttributeIsAvailable(element, "value") && !utility.getFormattedTextName(element.attr("value")).equals("")) {
+            name = utility.getFormattedTextName(element.attr("value")) + "_" + elementType;
         } else if (checker.checkForAttributeIsAvailable(element, "name")) {
-            name = getFormattedTextName(element.attr("name")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("name")) + "_" + elementType;
 
         } else if (checker.checkForAttributeIsAvailable(element, "id")) {
-            name = getFormattedTextName(element.attr("id")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("id")) + "_" + elementType;
             System.out.println(name);
         }
         else if (checker.checkForAttributeIsAvailable(element, "aria-label")) {
-            name = getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
             System.out.println(name);
         }
 
 
         else {
             Element element1 = element.parent().siblingElements().first();
-            if (element1.nodeName().equals("label")) {
-                name = getFormattedTextName(element1.text()) + "_" + elementType;
+            try {
+                if (element1.nodeName().equals("label")) {
+                    name = utility.getFormattedTextName(element1.text()) + "_" + elementType;
+                }
+            } catch (Exception e) {
+
             }
-            name = "unknown_element";
         }
 
 
@@ -137,7 +144,7 @@ public class ElementNameGenerator {
     public String getNameForTextArea(Element element) {
 
         ElementChecker checker = new ElementChecker();
-        String name = "";
+        String name = "unknown_element";
         String elementType = "textarea";
         if (element.nodeName().equals("textarea")) {
             if (element.attr("type").equals("textarea")) {
@@ -149,32 +156,34 @@ public class ElementNameGenerator {
 
 
         if (element.hasText()) {
-            name = getFormattedTextName(element.text()) + "_" + elementType;
+            name = utility.getFormattedTextName(element.text()) + "_" + elementType;
         }
         else if (checker.checkForAttributeIsAvailable(element, "aria-label")) {
-            name = getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
         }
         else if (checker.checkForAttributeIsAvailable(element, "placeholder")) {
-            name = getFormattedTextName(element.attr("placeholder")) + "_" + elementType;
-        } else if (checker.checkForAttributeIsAvailable(element, "value") && !getFormattedTextName(element.attr("value")).equals("")) {
-            name = getFormattedTextName(element.attr("value")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("placeholder")) + "_" + elementType;
+        } else if (checker.checkForAttributeIsAvailable(element, "value") && !utility.getFormattedTextName(element.attr("value")).equals("")) {
+            name = utility.getFormattedTextName(element.attr("value")) + "_" + elementType;
         } else if (checker.checkForAttributeIsAvailable(element, "name")) {
-            name = getFormattedTextName(element.attr("name")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("name")) + "_" + elementType;
 
         } else if (checker.checkForAttributeIsAvailable(element, "id")) {
-            name = getFormattedTextName(element.attr("id")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("id")) + "_" + elementType;
             System.out.println(name);
         }
         else if (checker.checkForAttributeIsAvailable(element, "aria-label")) {
-            name = getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
             System.out.println(name);
         }
         else {
             Element element1 = element.parent().siblingElements().first();
-            if (element1.nodeName().equals("label")) {
-                name = getFormattedTextName(element1.text()) + "_" + elementType;
-            }
-            name = "unknown_element";
+            try {
+                if (element1.nodeName().equals("label")) {
+                    name = utility.getFormattedTextName(element1.text()) + "_" + elementType;
+                }
+            } catch (Exception e) {
+                            }
         }
 
 
@@ -184,41 +193,41 @@ public class ElementNameGenerator {
 
     public String getNameForLink(Element element) {
         ElementChecker checker = new ElementChecker();
-        String name = "";
+        String name = "unknown_element";
         String elementType = "link";
 
             if (element.attr("role").equals("button")) {
                     elementType = "button";
             }
         if (element.hasText()) {
-            name = getFormattedTextName(element.text()) + "_" + elementType;
+            name = utility.getFormattedTextName(element.text()) + "_" + elementType;
         }else if (checker.checkForAttributeIsAvailable(element, "aria-label")) {
-            name = getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
         }
         else if (checker.checkForAttributeIsAvailable(element, "placeholder")) {
-            name = getFormattedTextName(element.attr("placeholder")) + "_" + elementType;
-        } else if (checker.checkForAttributeIsAvailable(element, "value") && !getFormattedTextName(element.attr("value")).equals("")) {
-            name = getFormattedTextName(element.attr("value")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("placeholder")) + "_" + elementType;
+        } else if (checker.checkForAttributeIsAvailable(element, "value") && !utility.getFormattedTextName(element.attr("value")).equals("")) {
+            name = utility.getFormattedTextName(element.attr("value")) + "_" + elementType;
         } else if (checker.checkForAttributeIsAvailable(element, "name")) {
-            name = getFormattedTextName(element.attr("name")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("name")) + "_" + elementType;
 
         } else if (checker.checkForAttributeIsAvailable(element, "id")) {
-            name = getFormattedTextName(element.attr("id")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("id")) + "_" + elementType;
             System.out.println(name);
         }  else if (checker.checkForAttributeIsAvailable(element, "aria-label")) {
-            name = getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
+            name = utility.getFormattedTextName(element.attr("aria-label")) + "_" + elementType;
             System.out.println(name);
         }
         else {
             Element element1 = element.parent().siblingElements().first();
             try {
                 if (element1.nodeName().equals("label")) {
-                    name = getFormattedTextName(element1.text()) + "_" + elementType;
+                    name = utility.getFormattedTextName(element1.text()) + "_" + elementType;
                 }
             } catch (Exception e) {
 
             }
-            name = "unknown_element";
+
         }
 
         System.out.println("Element Link Name" + name);
@@ -226,12 +235,7 @@ public class ElementNameGenerator {
         return name;
     }
 
-    public String getFormattedTextName(String name) {
 
-        String formattedTextName = name.replace(" ", "_").toLowerCase(Locale.ROOT);
-
-        return formattedTextName;
-    }
 
 
 }

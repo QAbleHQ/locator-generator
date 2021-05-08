@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class PageObject {
@@ -13,12 +14,20 @@ public class PageObject {
 
     public void generateLocatorForCurrentPage() {
         System.out.println("Current URL is" + Browser.driver.getCurrentUrl());
+
+        Scanner in = new Scanner(System.in);
+
         String pageDom = Browser.driver.getPageSource();
+
+
+        Utils utility = new Utils();
+        String pageTitle = utility.getFormattedTextName(Browser.driver.getTitle())+".json";
+
 
         JSONArray elementArray = domParser(pageDom);
 
         GeneratePageObjectFile file = new GeneratePageObjectFile();
-        file.createPageObjectFile(elementArray);
+        file.createPageObjectFile(elementArray,pageTitle);
 
 
     }
@@ -26,8 +35,6 @@ public class PageObject {
     public JSONArray domParser(String dom) {
 
         Document doc = Jsoup.parse(dom);
-        Elements links = doc.select("a");
-        Element head = doc.select("head").first();
 
         xPathGenerator generator = new xPathGenerator();
 
