@@ -1,15 +1,12 @@
-import domParser.ElementChecker;
-import domParser.xPathGenerator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Attribute;
-import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class PageObject {
@@ -17,19 +14,27 @@ public class PageObject {
 
     public void generateLocatorForCurrentPage() {
         System.out.println("Current URL is" + Browser.driver.getCurrentUrl());
+
+        Scanner in = new Scanner(System.in);
+
         String pageDom = Browser.driver.getPageSource();
 
-        domParser(pageDom);
+
+        Utils utility = new Utils();
+        String pageTitle = utility.getFormattedTextName(Browser.driver.getTitle())+".json";
+
+
+        JSONArray elementArray = domParser(pageDom);
+
+        GeneratePageObjectFile file = new GeneratePageObjectFile();
+        file.createPageObjectFile(elementArray,pageTitle);
 
 
     }
 
-    public void domParser(String dom) {
-
+    public JSONArray domParser(String dom) {
 
         Document doc = Jsoup.parse(dom);
-        Elements links = doc.select("a");
-        Element head = doc.select("head").first();
 
         xPathGenerator generator = new xPathGenerator();
 
@@ -52,13 +57,20 @@ public class PageObject {
                 currentPath = currentPath + "/" + element.nodeName();
 
                 ElementFilterHelper filterHelper = new ElementFilterHelper();
+
+                ElementNameGenerator nameGenerator = new ElementNameGenerator();
                 if (filterHelper.checkForValidElement(element)) {
 
-                    object.put("name", element.nodeName());
+                    System.out.println("Element Node : " + element.nodeName());
+                    ArrayList list = checker.getElementList(element);
+                    object.put("name", nameGenerator.generateName(element));
                     object.put("absolutePath", generator.generateAbsolutePath(element));
-                    object.put("xpath", checker.getElementList(element, currentPath));
-                    elementArray.add(object);
-                    System.out.println("baseURl    " + element.cssSelector());
+                    object.put("xpath", list);
+
+                    if (list.size() > 0) {
+                        elementArray.add(object);
+                    }
+                  //  System.out.println("baseURl    " + element.cssSelector());
 
                 }
             }
@@ -66,10 +78,9 @@ public class PageObject {
 
         }
         System.out.println("-------------------------------------------------------------------");
-          System.out.println(elementArray);
+        System.out.println(elementArray);
 
-        GeneratePageObjectFile file = new GeneratePageObjectFile();
-        file.createPageObjectFile(elementArray);
+        return elementArray;
     }
 
 
