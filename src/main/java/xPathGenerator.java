@@ -2,7 +2,6 @@ import org.jsoup.nodes.Element;
 
 public class xPathGenerator {
 
-
     public String generateXpathBasedOnIdWithoutNode(Element element) {
         String xpath = "//*[@id='" + element.attr("id") + "']";
         return xpath;
