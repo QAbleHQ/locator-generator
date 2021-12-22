@@ -72,7 +72,7 @@ public class PageObject {
                     System.err.println("element Size" + element_name.length + " : " + name);
 
                     ArrayList list = checker.getElementList(element);
-                    list.add(generator.generateAbsolutePath(element));
+                    //   list.add(generator.generateAbsolutePath(element));
 
                     tinyObject.put("platform", "web");
                     if (name.contains("text_box")) {
@@ -82,7 +82,12 @@ public class PageObject {
                         tinyObject.put("element_type", element_name[element_name.length - 1]);
                     }
                     tinyObject.put("locator_type", "xpath");
-                    tinyObject.put("locator_value", list);
+                    try {
+                        tinyObject.put("locator_value", list.get(0));
+                    } catch (Exception e) {
+
+                    }
+
                     tinyObject.put("objectGenerate", "generate");
 
                     elementObject.put(name, tinyObject);
