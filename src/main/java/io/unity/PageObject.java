@@ -27,8 +27,12 @@ public class PageObject {
 
         JSONObject elementObject = domParser(pageDom);
 
+        System.out.println("Please Provide the locator File Name");
+        Scanner commandIn = new Scanner(System.in);
+        String command = commandIn.nextLine();
+
         GeneratePageObjectFile file = new GeneratePageObjectFile();
-        file.createPageObjectFile(elementObject, pageTitle);
+        file.createPageObjectFile(elementObject, command);
 
 
     }
