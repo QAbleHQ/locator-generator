@@ -1,6 +1,6 @@
-import org.jsoup.nodes.Element;
+package io.unity;
 
-import java.util.Locale;
+import org.jsoup.nodes.Element;
 
 public class ElementNameGenerator {
 

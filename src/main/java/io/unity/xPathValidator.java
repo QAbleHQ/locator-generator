@@ -1,3 +1,5 @@
+package io.unity;
+
 import org.openqa.selenium.By;
 
 public class xPathValidator {

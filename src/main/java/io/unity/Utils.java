@@ -1,3 +1,5 @@
+package io.unity;
+
 import java.util.Locale;
 
 public class Utils {

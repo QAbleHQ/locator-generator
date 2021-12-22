@@ -1,6 +1,4 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+package io.unity;
 
 import java.util.Scanner;
 
@@ -9,10 +7,6 @@ public class EntryPoint {
    public static String website = "";
     public static String pageObjectDirectory = "";
 
-    public static void main(String[] args) {
-        EntryPoint point = new EntryPoint();
-        point.generate_locators();
-    }
 
 
     public void generate_locators() {
