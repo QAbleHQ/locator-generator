@@ -21,18 +21,18 @@ public class PageObject {
 
 
         Utils utility = new Utils();
-        String pageTitle = utility.getFormattedTextName(Browser.driver.getTitle())+".json";
+        String pageTitle = utility.getFormattedTextName(Browser.driver.getTitle()) + ".json";
 
 
-        JSONArray elementArray = domParser(pageDom);
+        JSONObject elementObject = domParser(pageDom);
 
         GeneratePageObjectFile file = new GeneratePageObjectFile();
-        file.createPageObjectFile(elementArray,pageTitle);
+        file.createPageObjectFile(elementObject, pageTitle);
 
 
     }
 
-    public JSONArray domParser(String dom) {
+    public JSONObject domParser(String dom) {
 
         Document doc = Jsoup.parse(dom);
 
@@ -44,12 +44,13 @@ public class PageObject {
                 doc.getAllElements();
 
         ElementChecker checker = new ElementChecker();
-        JSONArray elementArray = new JSONArray();
+        JSONObject elementObject = new JSONObject();
         for (Element element : allElements) {
 
             if (!element.nodeName().equals("#document")) {
 
                 JSONObject object = new JSONObject();
+
                 //            System.out.println(currentPath);
 //                System.out.println(element.nodeName()
                 //                      + " " + element.ownText());
@@ -61,16 +62,35 @@ public class PageObject {
                 ElementNameGenerator nameGenerator = new ElementNameGenerator();
                 if (filterHelper.checkForValidElement(element)) {
 
+                    JSONObject tinyObject = new JSONObject();
                     System.out.println("Element Node : " + element.nodeName());
-                    ArrayList list = checker.getElementList(element);
-                    object.put("name", nameGenerator.generateName(element));
-                    object.put("absolutePath", generator.generateAbsolutePath(element));
-                    object.put("xpath", list);
 
-                    if (list.size() > 0) {
-                        elementArray.add(object);
+                    String name = nameGenerator.generateName(element);
+                    String[] element_name = name.split("_");
+
+
+                    System.err.println("element Size" + element_name.length + " : " + name);
+
+                    ArrayList list = checker.getElementList(element);
+                    list.add(generator.generateAbsolutePath(element));
+
+                    tinyObject.put("platform", "web");
+                    if (name.contains("text_box")) {
+                        tinyObject.put("element_type", "text_box");
+
+                    } else {
+                        tinyObject.put("element_type", element_name[element_name.length - 1]);
                     }
-                  //  System.out.println("baseURl    " + element.cssSelector());
+                    tinyObject.put("locator_type", "xpath");
+                    tinyObject.put("locator_value", list);
+                    tinyObject.put("objectGenerate", "generate");
+
+                    elementObject.put(name, tinyObject);
+
+                    /*if (list.size() > 0) {
+                        elementObject.put("",object);
+                    }*/
+                    //  System.out.println("baseURl    " + element.cssSelector());
 
                 }
             }
@@ -78,9 +98,9 @@ public class PageObject {
 
         }
         System.out.println("-------------------------------------------------------------------");
-        System.out.println(elementArray);
+        System.out.println(elementObject);
 
-        return elementArray;
+        return elementObject;
     }
 
 

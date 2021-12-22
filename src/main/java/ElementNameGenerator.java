@@ -38,22 +38,22 @@ public class ElementNameGenerator {
 
         ElementChecker checker = new ElementChecker();
         String name = "unknown_element";
-        String elementType = "text_field";
+        String elementType = "text_box";
         if (element.nodeName().equals("input")) {
             if (element.attr("type").equals("text")) {
-                elementType = "text_field";
+                elementType = "text_box";
             }
             if (element.attr("type").equals("submit")) {
                 elementType = "button";
             }
             if (element.attr("type").equals("password")) {
-                elementType = "password_box";
+                elementType = "password";
             }
             if (element.attr("type").equals("file")) {
-                elementType = "upload_box";
+                elementType = "file";
             }
             if (element.attr("type").equals("email")) {
-                elementType = "email_field";
+                elementType = "email";
             }
 
         }
