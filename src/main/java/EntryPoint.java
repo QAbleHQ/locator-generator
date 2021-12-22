@@ -10,7 +10,7 @@ public class EntryPoint {
     public static String pageObjectDirectory = "";
 
 
-    public static void main(String[] args) {
+    public void generate_locators(String[] args) {
 
         Scanner in = new Scanner(System.in);
 
