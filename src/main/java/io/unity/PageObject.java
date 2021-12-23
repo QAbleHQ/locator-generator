@@ -50,21 +50,18 @@ public class PageObject {
 
         ElementChecker checker = new ElementChecker();
         JSONObject elementObject = new JSONObject();
+
         for (Element element : allElements) {
 
             if (!element.nodeName().equals("#document")) {
 
                 JSONObject object = new JSONObject();
 
-                //            System.out.println(currentPath);
-//                System.out.println(element.nodeName()
-                //                      + " " + element.ownText());
-
                 currentPath = currentPath + "/" + element.nodeName();
 
                 ElementFilterHelper filterHelper = new ElementFilterHelper();
-
                 ElementNameGenerator nameGenerator = new ElementNameGenerator();
+
                 if (filterHelper.checkForValidElement(element)) {
 
                     JSONObject tinyObject = new JSONObject();
@@ -73,25 +70,18 @@ public class PageObject {
                     String name = nameGenerator.generateName(element);
                     String[] element_name = name.split("_");
 
-
-                    System.err.println("element Size" + element_name.length + " : " + name);
-
                     ArrayList list = checker.getElementList(element);
-                    //   list.add(generator.generateAbsolutePath(element));
+                    list.add(generator.generateAbsolutePath(element));
 
                     tinyObject.put("platform", "web");
                     if (name.contains("text_box")) {
                         tinyObject.put("element_type", "text_box");
-
                     } else {
                         tinyObject.put("element_type", element_name[element_name.length - 1]);
                     }
                     tinyObject.put("locator_type", "xpath");
-                    try {
-                        tinyObject.put("locator_value", list.get(0));
-                    } catch (Exception e) {
 
-                    }
+                    tinyObject.put("locator_value", list.get(0));
 
                     tinyObject.put("objectGenerate", "generate");
 
