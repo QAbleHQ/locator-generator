@@ -7,7 +7,10 @@ public class EntryPoint {
    public static String website = "";
     public static String pageObjectDirectory = "";
 
-
+    public static void main(String[] args) {
+        EntryPoint point = new EntryPoint();
+        point.generate_locators();
+    }
 
     public void generate_locators() {
 

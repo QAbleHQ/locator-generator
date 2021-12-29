@@ -15,7 +15,12 @@ public class ElementChecker {
 
 
         if (element.hasText()) {
-            list.add(generator.generateXpathBasedOnText(element));
+
+            String xpathWithNode = generator.generateXpathBasedOnText(element);
+            if (validator.isxPathIsVisible(xpathWithNode)) {
+                list.add(xpathWithNode);
+            }
+
         } else if (checkForAttributeIsAvailable(element, "name")) {
 
             String xpathWithNode = generator.generateXpathBasedOnName(element);
@@ -46,8 +51,6 @@ public class ElementChecker {
             if (validator.isxPathIsVisible(generator.generateXpathBasedOnClass(element))) {
                 list.add(generator.generateXpathBasedOnClass(element));
             }
-
-
         }
 
 

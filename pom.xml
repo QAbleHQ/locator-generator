@@ -6,7 +6,7 @@
 
     <groupId>unity</groupId>
     <artifactId>locator-generator</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.6</version>
 
     <distributionManagement>
         <repository>
@@ -19,8 +19,8 @@
 
 
     <properties>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
 
